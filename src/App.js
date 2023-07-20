@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AddColumn from './Components/AddColumn'
 
 
@@ -19,12 +19,16 @@ function App() {
       {id: 4, name: "ogurci"},
     ]
   }
+
+    let [name, setName] = useState('');
+    let [columns, setColumns] = useState([state.columns]);
   
-  // let onAddColumn = () => {
-  //   let columns = [...this.state.columns];
-  //   let value = "oleg";
-  //   columns.push(value)
-  //   this.setState({ columns })
+  // let addColumn = (columns) => {
+  //   // let columns = [...this.state.columns];
+  //   // let value = "oleg";
+  //   // columns.push(value)
+  //   // this.setState({ columns })
+  //   state.columns.push(columns)
   // }
 
   return (
@@ -40,7 +44,14 @@ function App() {
         </tr>
       ))}
 
-      <AddColumn columns={state.columns}/>
+        Добавить:
+      <input value={name} onChange={e => setName(e.target.value)}/>
+      <button onClick={() => { 
+        setColumns([...columns, {id: columns.length + 1, name: name}])
+        debugger
+    }}>Add</button>
+
+      {/* <AddColumn columns={state.columns} addColumn={addColumn}/> */}
     </div>
   );
 }

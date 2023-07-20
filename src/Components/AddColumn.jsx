@@ -4,20 +4,27 @@ import React, {useState} from 'react';
 
 export default function AddColumn (props) {
 
-    const [name, setName] = useState('');
-    // const [columns, setColumns] = useState(props.state.columns);
-  
+    let [name, setName] = useState('');
+    let [columns, setColumns] = useState(props.columns);
+
     return (
       <>
       Добавить:
       <input value={name} onChange={e => setName(e.target.value)}/>
   
-      <button onClick={() => {
-        // setColumns([...props.columns, {id: nextID++, name: name}]);
-        // setColumns([...columns, {id: columns.length + 1, name: name}]);
-        debugger;
+      {/* <button onClick={() => {
+        // debugger;
         let columns = [...props.columns];
-        props.setState({ id: columns.length + 1, name: name })
+        props.addColumn({ id: columns.length + 1, name: name })
+
+        console.log(props)
+      }}>Add</button> */}
+
+      <button onClick={() => {
+        debugger;
+        setColumns([...columns, {id: columns.length + 1, name: name}])
+
+        console.log(props)
       }}>Add</button>
 
         {/* {columns.map(columns => (
