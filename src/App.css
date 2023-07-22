@@ -8,9 +8,22 @@ body {
   color: white;
 }
 
-td, th {
-    padding: 30px; /* Поля вокруг содержимого таблицы */
-    border: 1px solid white; /* Параметры рамки */
+/* td, th {
+    padding: 30px;
+    border: 1px solid white;
+} */
+
+.flextable {
+  display: flex;
+}
+
+.wj-pivotpanel {
+  width: 500px !important;
+  margin: 0px 10px !important;
+}
+
+.wj-pivotgrid {
+  height: 600px !important;
 }
 
 .input {

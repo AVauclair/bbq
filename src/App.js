@@ -3,6 +3,12 @@ import React, {useState, useEffect} from 'react';
 import AddColumn from './Components/AddColumn'
 import AddRow from './Components/AddRow';
 
+import '@grapecity/wijmo.styles/wijmo.css';
+import { getOrderList } from './makeData';
+
+import * as wjOlap from '@grapecity/wijmo.olap';
+import * as wjcOlap from '@grapecity/wijmo.react.olap';
+
 
 
 function App() {
@@ -20,9 +26,18 @@ function App() {
       {id: 4, name: "ogurci"},
     ])
 
+    const [ng, setNG] = useState(new wjOlap.PivotEngine({
+      itemsSource: getOrderList(30),
+      fields: [
+        {binding: 'persons', header: 'пчел'},
+        {binding: 'price', header: 'стоимость'},
+        {binding: 'product', header: 'товар'},
+      ]
+    }));
+
   return (
     <div className='App'>
-      <div className='table'>
+      {/* <div className='table'>
         {rows.map((food) => (
           <tr>
             <th><input className='input' value={food.name}/></th>
@@ -37,7 +52,15 @@ function App() {
 
       <AddColumn columns={columns} setColumn={setColumn}/>
       <br/>
-      <AddRow rows={rows} setRow={setRow}/>
+      <AddRow rows={rows} setRow={setRow}/> */}
+
+<div className="App">
+      <div className='flextable'>
+        <wjcOlap.PivotPanel itemsSource={ng}></wjcOlap.PivotPanel>
+        <wjcOlap.PivotGrid itemsSource={ng} ></wjcOlap.PivotGrid>
+      </div>
+    </div>
+      
     </div>
   );
 }
