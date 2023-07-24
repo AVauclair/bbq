@@ -9,37 +9,38 @@ import RowCell from './Components/RowCell';
 function App() {
 
     let [columns, setColumn] = useState([
-      {id: 0, name: "oleg"},
-      {id: 1, name: "vadik"},
-      {id: 2, name: "arina"}]);
+      {id: 0, name: "Олег"},
+      {id: 1, name: "Вадик"},
+      {id: 2, name: "Арина"}]);
 
     let [rows, setRow] = useState([
-      {id: 0, name: "makaroni"},
-      {id: 1, name: "pomidori"},
-      {id: 2, name: "ogurci"},
+      {id: 0, name: "Макароны"},
+      {id: 1, name: "Помидоры"},
+      {id: 2, name: "Огурцы"},
     ])
 
   return (
     <div className='App'>
       <div className='table'>
         <table>
-          <tbody>
+          <thead>
             <tr>
-              <th>товары</th>
-              <th>стоимость</th>
+              <th>Товары</th>
+              <th>Стоимость</th>
               {columns.map((person, key) => (
-                  <ColumnCell person={person} index={key} columns={columns} setColumn={setColumn}/>
+                  <ColumnCell key={key} person={person} index={key} columns={columns} setColumn={setColumn}/>
               ))}
             </tr>
-          </tbody>
+          </thead>
 
-          {rows.map((food, key) => (
-            <tbody key={key}>
-              <tr>
-                <RowCell food={food} index={key} rows={rows} setRow={setRow}/>
-              </tr>
-            </tbody>
-            ))}
+          <tbody>
+            {rows.map((food, key) => (
+                <tr key={key}>
+                  {/* <button onClick={() => {setRow(rows.filter(f => f.id !== food.id))}}>DEL</button> */}
+                  <RowCell food={food} index={key} rows={rows} setRow={setRow}/>
+                </tr>
+              ))}
+          </tbody>
         </table>
       </div>
 

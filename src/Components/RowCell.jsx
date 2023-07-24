@@ -14,8 +14,11 @@ export default function RowCell (props) {
         console.log(props.rows)
     }
 
+
     return (
-        <th>{editMode ? 
+        <th>
+            <button onClick={() => {props.setRow(props.rows.filter(f => f.id !== props.food.id))}}>DEL</button>
+            {editMode ? 
         <input 
             ref={foodElement}
             onChange={onInputChange}
