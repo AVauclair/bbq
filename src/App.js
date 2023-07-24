@@ -1,65 +1,51 @@
 import './App.css';
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import AddColumn from './Components/AddColumn'
 import AddRow from './Components/AddRow';
-
-import '@grapecity/wijmo.styles/wijmo.css';
-import { getOrderList } from './makeData';
-
-import * as wjOlap from '@grapecity/wijmo.olap';
-import * as wjcOlap from '@grapecity/wijmo.react.olap';
-
+import ColumnCell from './Components/ColumnCell';
+import RowCell from './Components/RowCell';
 
 
 function App() {
 
     let [columns, setColumn] = useState([
-      {id: 1, name: "stoimost"},
-      {id: 1, name: "oleg"},
-      {id: 2, name: "vadik"},
-      {id: 3, name: "arina"}]);
+      {id: 0, name: "oleg"},
+      {id: 1, name: "vadik"},
+      {id: 2, name: "arina"}]);
 
     let [rows, setRow] = useState([
-      {id: 1, name: "tovarich"},
-      {id: 2, name: "makaroni"},
-      {id: 3, name: "pomidori"},
-      {id: 4, name: "ogurci"},
+      {id: 0, name: "makaroni"},
+      {id: 1, name: "pomidori"},
+      {id: 2, name: "ogurci"},
     ])
-
-    const [ng, setNG] = useState(new wjOlap.PivotEngine({
-      itemsSource: getOrderList(30),
-      fields: [
-        {binding: 'persons', header: 'пчел'},
-        {binding: 'price', header: 'стоимость'},
-        {binding: 'product', header: 'товар'},
-      ]
-    }));
 
   return (
     <div className='App'>
-      {/* <div className='table'>
-        {rows.map((food) => (
-          <tr>
-            <th><input className='input' value={food.name}/></th>
-            {columns.map((persons) => (
-              <>
-                <th>{food.id === 1 ? <input className='input' value={persons.name}/> : null}</th>
-              </>
+      <div className='table'>
+        <table>
+          <tbody>
+            <tr>
+              <th>товары</th>
+              <th>стоимость</th>
+              {columns.map((person, key) => (
+                  <ColumnCell person={person} index={key} columns={columns} setColumn={setColumn}/>
+              ))}
+            </tr>
+          </tbody>
+
+          {rows.map((food, key) => (
+            <tbody key={key}>
+              <tr>
+                <RowCell food={food} index={key} rows={rows} setRow={setRow}/>
+              </tr>
+            </tbody>
             ))}
-          </tr>
-        ))}
+        </table>
       </div>
 
       <AddColumn columns={columns} setColumn={setColumn}/>
       <br/>
-      <AddRow rows={rows} setRow={setRow}/> */}
-
-<div className="App">
-      <div className='flextable'>
-        <wjcOlap.PivotPanel itemsSource={ng}></wjcOlap.PivotPanel>
-        <wjcOlap.PivotGrid itemsSource={ng} ></wjcOlap.PivotGrid>
-      </div>
-    </div>
+      <AddRow rows={rows} setRow={setRow}/>
       
     </div>
   );

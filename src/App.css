@@ -8,22 +8,9 @@ body {
   color: white;
 }
 
-/* td, th {
+td, th {
     padding: 30px;
     border: 1px solid white;
-} */
-
-.flextable {
-  display: flex;
-}
-
-.wj-pivotpanel {
-  width: 500px !important;
-  margin: 0px 10px !important;
-}
-
-.wj-pivotgrid {
-  height: 600px !important;
 }
 
 .input {
