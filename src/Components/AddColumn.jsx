@@ -6,7 +6,7 @@ export default function AddColumn (props) {
 
     return (
       <>
-      Добавить столбец:
+      Добавить человека:
       <input className='input' value={name} onChange={e => setName(e.target.value)}/>
       <button onClick={() => { 
         props.setColumn([...props.columns, {id: props.columns.length + 1, name: name}])
