@@ -8,7 +8,6 @@ export default function RowCell (props) {
 
     let rowElement = createRef()
     let onInputChange = () => {
-        debugger
         let rowValue = rowElement.current.value
         newRows[props.index][props.rowCellName] = rowValue
         props.setRow(newRows)
@@ -33,7 +32,6 @@ export default function RowCell (props) {
 
     return (
         <td>
-            {/* <button onClick={() => {props.setRow(props.rows.filter(f => f.id !== props.food.id))}}>DEL</button> */}
             {editMode ? 
         <input 
             ref={rowElement}

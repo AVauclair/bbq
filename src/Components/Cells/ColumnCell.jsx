@@ -32,7 +32,6 @@ export default function ColumnCell (props) {
 
     return (
         <td>
-            {/* <button onClick={() => {props.setColumn(props.columns.filter(p => p.id !== props.person.id))}}>DEL</button> */}
             {editMode ? 
         <input 
             ref={personElement} 
