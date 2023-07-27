@@ -4,8 +4,7 @@ import AddColumn from './Components/AddColumn'
 import AddRow from './Components/AddRow';
 import ColumnCell from './Components/Cells/ColumnCell';
 import RowCell from './Components/Cells/RowCell';
-import PriceCell from './Components/Cells/PriceCell';
-import PercentCell from './Components/Cells/PercentCell';
+import MoneyCell from './Components/Cells/MoneyCell';
 
 
 function App() {
@@ -42,8 +41,8 @@ debugger
               <th>Товары</th>
               <th>Стоимость</th>
               {columns.map((person, key) => (
-                  <ColumnCell key={key} person={person} index={key} columns={columns} setColumn={setColumn} setButtonDisable={setButtonDisable} 
-                  setCellID={setCellID} setCellType={setCellType}/>
+                  <ColumnCell key={key} person={person} index={key} columns={columns} 
+                  setColumn={setColumn} setButtonDisable={setButtonDisable} setCellID={setCellID} setCellType={setCellType}/>
               ))}
             </tr>
           </thead>
@@ -51,18 +50,14 @@ debugger
           <tbody>
             {rows.map((row, key) => (
                 <tr key={key}>
-                  <RowCell value={row.name} rowCellName={"name"} index={key} rows={rows} setRow={setRow} setButtonDisable={setButtonDisable} 
-                  setCellID={setCellID} setCellType={setCellType}/>
-
-                  <RowCell value={row.fullPrice} rowCellName={"fullPrice"} index={key} rows={rows} setRow={setRow} setButtonDisable={setButtonDisable} 
-                  setCellID={setCellID} setCellType={setCellType}/>
+                  <RowCell value={row.name} rowCellName={"name"} index={key} rows={rows} 
+                  setRow={setRow} setButtonDisable={setButtonDisable} setCellID={setCellID} setCellType={setCellType}/>
+                  <RowCell value={row.fullPrice} rowCellName={"fullPrice"} index={key} rows={rows} 
+                  setRow={setRow} setButtonDisable={setButtonDisable} setCellID={setCellID} setCellType={setCellType}/>
 
                   {columns.map((person, key) => (
-                    // <td>{row.prices[person.name].price} 
-                    // <br/>
-                    // {row.prices[person.name].percent}</td>
-                    <PriceCell price={row.prices[person.name].price} percent={row.prices[person.name].percent} index={key} rows={rows} setRow={setRow} setButtonDisable={setButtonDisable} 
-                    setCellID={setCellID} setCellType={setCellType}/>
+                    <MoneyCell price={row.prices[person.name].price} percent={row.prices[person.name].percent} rowCellName={"percent"} index={key} rows={rows} 
+                    setRow={setRow} setButtonDisable={setButtonDisable} setCellID={setCellID} setCellType={setCellType}/>
                   ))}
                 </tr>
               ))}
