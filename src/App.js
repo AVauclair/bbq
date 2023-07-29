@@ -15,12 +15,13 @@ function App() {
       {id: 1, name: "Вадик"},
       {id: 2, name: "Арина"}]);
 
-    
-
     let [rows, setRow] = useState([
-      {id: 0, name: "Макароны", fullPrice: "2000", prices: {"Олег": {price: "22", percent: "15%"}, "Вадик": {price: "54", percent: "54%"}, "Арина": {price: "12", percent: "12%" }}},
-      {id: 1, name: "Помидоры", fullPrice: "3000", prices: {"Олег": {price: "22", percent: "15%"}, "Вадик": {price: "54", percent: "54%"}, "Арина": {price: "12", percent: "12%" }}},
-      {id: 2, name: "Огурцы", fullPrice: "5000", prices: {"Олег": {price: "22", percent: "15%"}, "Вадик": {price: "54", percent: "54%"}, "Арина": {price: "12", percent: "12%" }}},
+      {id: 0, name: "Макароны", fullPrice: "2000", 
+      prices: {"Олег": {price: "123", percent: "123%"}, "Вадик": {price: "678", percent: "678%"}, "Арина": {price: "987", percent: "987%"}}},
+      {id: 1, name: "Помидоры", fullPrice: "3000", 
+      prices: {"Олег": {price: "234", percent: "234%"}, "Вадик": {price: "789", percent: "789%"}, "Арина": {price: "654", percent: "654%"}}},
+      {id: 2, name: "Огурцы", fullPrice: "5000", 
+      prices: {"Олег": {price: "456", percent: "456%"}, "Вадик": {price: "8910", percent: "8910%"}, "Арина": {price: "321", percent: "321%"}}},
     ])
 
     let [buttonDisabled, setButtonDisable] = useState(true)
@@ -31,7 +32,7 @@ function App() {
       cellType === "row" ? rows.splice(cellID, 1) : columns.splice(cellID, 1)
     }
 
-debugger
+    // debugger
   return (
     <div className='App'>
       <div className='table'>
@@ -65,7 +66,7 @@ debugger
         </table>
       </div>
 
-      <AddColumn columns={columns} setColumn={setColumn}/>
+      <AddColumn columns={columns} setColumn={setColumn} rows={rows} setRow={setRow}/>
       <br/>
       <AddRow rows={rows} setRow={setRow}/>
       <br/><br/>
