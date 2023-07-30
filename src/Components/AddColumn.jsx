@@ -13,8 +13,8 @@ export default function AddColumn (props) {
       <input className='input' value={name} onChange={e => setName(e.target.value)}/>
       <button onClick={() => {
         props.setColumn([...props.columns, {id: props.columns.length + 1, name: name}])
-        newArr = props.rows.map((product, key) => {
-          product.prices[name] = {price: "1", percent: "1%"}
+        newArr = props.rows.map((product) => {
+          product.prices[name] = {price: "0", percent: "0%"}
           return product
         })
         props.setRow(newArr)

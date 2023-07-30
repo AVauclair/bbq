@@ -10,11 +10,12 @@ export default function ColumnCell (props) {
     let onInputChange = () => {
         let personName = personElement.current.value
         newColumns[props.index].name = personName
-        props.setColumn(newColumns)
+        // props.setColumn(newColumns)
+        console.log(newColumns)
     }
     
     let SelectCell = () => {
-        props.setCellID(props.index)
+        props.setColumnCellID(props.index)
         props.setCellType("column")
         props.setButtonDisable(false);
         setSelect(true);

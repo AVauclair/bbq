@@ -14,7 +14,7 @@ export default function RowCell (props) {
     }
 
     let SelectCell = () => {
-        props.setCellID(props.index)
+        props.setRowCellID(props.index)
         props.setCellType("row")
         props.setButtonDisable(false);
         setSelect(true);
