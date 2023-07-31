@@ -9,12 +9,12 @@ export default function RowCell (props) {
     let rowElement = createRef()
     let onInputChange = () => {
         let rowValue = rowElement.current.value
-        newRows[props.index][props.rowCellName] = rowValue
+        newRows[props.index] = {...newRows[props.index], [props.rowCellName]: rowValue}
         props.setRow(newRows)
     }
 
     let SelectCell = () => {
-        props.setRowCellID(props.index)
+        props.setRowCellIndex(props.index)
         props.setCellType("row")
         props.setButtonDisable(false);
         setSelect(true);

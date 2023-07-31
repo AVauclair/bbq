@@ -17,20 +17,20 @@ function App() {
 
     let [rows, setRow] = useState([
       {id: 0, name: "Макароны", fullPrice: "2000", prices: 
-      {"Олег": {price: "123", percent: "123%"}, "Вадик": {price: "678", percent: "678%"}, "Арина": {price: "987", percent: "987%"}}},
+      {0: {price: "123", percent: "123%"}, 1: {price: "678", percent: "678%"}, 2: {price: "987", percent: "987%"}}},
       {id: 1, name: "Помидоры", fullPrice: "3000", prices: 
-      {"Олег": {price: "234", percent: "234%"}, "Вадик": {price: "789", percent: "789%"}, "Арина": {price: "654", percent: "654%"}}},
+      {0: {price: "234", percent: "234%"}, 1: {price: "789", percent: "789%"}, 2: {price: "654", percent: "654%"}}},
       {id: 2, name: "Огурцы", fullPrice: "5000", prices: 
-      {"Олег": {price: "456", percent: "456%"}, "Вадик": {price: "8910", percent: "8910%"}, "Арина": {price: "321", percent: "321%"}}},
+      {0: {price: "456", percent: "456%"}, 1: {price: "8910", percent: "8910%"}, 2: {price: "321", percent: "321%"}}},
     ])
 
     let [buttonDisabled, setButtonDisable] = useState(true)
-    let [rowCellID, setRowCellID] = useState()
-    let [columnCellID, setColumnCellID] = useState()
+    let [rowCellIndex, setRowCellIndex] = useState()
+    let [columnCellIndex, setColumnCellIndex] = useState()
     let [cellType, setCellType] = useState()
 
     let DeleteCell = () => {
-      cellType === "row" ? rows.splice(rowCellID, 1) : columns.splice(rowCellID, 1)
+      cellType === "row" ? rows.splice(rowCellIndex, 1) : columns.splice(columnCellIndex, 1)
     }
 
     let columnIndex;
@@ -46,24 +46,24 @@ function App() {
               <th>Товары</th>
               <th>Стоимость</th>
               {columns.map((person, key) => (
-                  <ColumnCell key={key} person={person} index={key} columns={columns} 
-                  setColumn={setColumn} setButtonDisable={setButtonDisable} setColumnCellID={setColumnCellID} setCellType={setCellType}/>
+                  <ColumnCell key={key} person={person} index={key} columns={columns} rows={rows}
+                  setColumn={setColumn} setRow={setRow} setButtonDisable={setButtonDisable} setColumnCellIndex={setColumnCellIndex} setCellType={setCellType}/>
               ))}
             </tr>
           </thead>
 
           <tbody>
-            {rows.map((row, key) => (
-                <tr key={key}>
+            {rows.map((row, rowCellIndex) => (
+                <tr key={rowCellIndex}>
 
-                  <RowCell value={row.name} rowCellName={"name"} index={key} rows={rows} 
-                  setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellID} setCellType={setCellType}/>
-                  <RowCell value={row.fullPrice} rowCellName={"fullPrice"} index={key} rows={rows} 
-                  setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellID} setCellType={setCellType}/>
+                  <RowCell value={row.name} rowCellName={"name"} index={rowCellIndex} rows={rows} 
+                  setRow={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}/>
+                  <RowCell value={row.fullPrice} rowCellName={"fullPrice"} index={rowCellIndex} rows={rows} 
+                  setRow={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}/>
 
                   {columns.map((person, key) => (
-                    <MoneyCell price={row.prices[person.name].price} percent={row.prices[person.name].percent} index={key} rows={rows} 
-                    setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellID} setCellType={setCellType}/>
+                    <MoneyCell price={row.prices[person.id].price} percent={row.prices[person.id].percent} rows={rows} rowCellIndex={rowCellIndex} columnCellIndex={key}
+                    setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType}/>
                   ))}
                 </tr>
               ))}

@@ -5,22 +5,17 @@ export default function MoneyInput (props) {
     let [editMode, setEditMode] = useState(false)
     let [isSelected, setSelect] = useState (false)
     let newRows = [...props.rows]
-    let prices
 
     let element = createRef()
     let onInputChange = () => {
         let value = element.current.value
-
-        prices = newRows[props.index]["prices"]
-        console.log(prices)
-
-        // newRows[props.index][props.rowCellName] = value
+        newRows[props.rowCellIndex].prices[props.columnCellIndex][props.rowCellName] = value
+        console.log(newRows)
         props.setRow(newRows)
     }
     let SelectCell = () => {
-        props.setRowCellID(props.index)
+        // props.setRowCellID(props.index)
         props.setCellType("row")
-        props.setButtonDisable(false);
         setSelect(true);
     }
 

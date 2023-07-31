@@ -17,7 +17,7 @@ export default function AddRow (props) {
         fullPrice: "bebe",
         prices: {},
        }
-      props.columns.forEach((person) => {newProduct.prices[person.name] = {price: "0", percent: "0%"}})
+      props.columns.forEach((person) => {newProduct.prices[person.id] = {price: "0", percent: "0%"}})
       props.setRow([...props.rows, newProduct])
       setProduct('')
       }}>Add</button>
