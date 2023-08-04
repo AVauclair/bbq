@@ -1,23 +1,63 @@
 import React, {useState} from 'react';
+import Modal from './Modal';
+import { Form, Formik, Field } from 'formik';
 
 export default function AddColumn (props) {
 
-    let [name, setName] = useState('');
-    let newArr;
+    let [modalActive, setModalActive] = useState()
+    let newPersons;
+    let newProduct = {}
+    let personPercents;
+    let personPrice;
+    let currentID = 2
 
     return (
       <>
-      Добавить человека:
-      <input className='input' value={name} onChange={e => setName(e.target.value)}/>
-      <button onClick={() => {
-        props.setColumn([...props.columns, {id: props.columns.length + 1, name: name}])
-        newArr = props.rows.map((product) => {
-          product.prices[props.columns.length + 1] = {price: "0", percent: "0%"}
-          return product
-        })
-        props.setRow(newArr)
-        setName('')
-      }}>Add</button> 
+      <button onClick={() => { setModalActive(true) }}>Добавить человека</button> 
+
+      <Modal modalActive={modalActive} setModalActive={setModalActive}>
+        <Formik
+          initialValues = {{
+            name: '',
+            fullPrice: '',
+            equalPrice: true,
+          }}
+          onSubmit={(values) => {
+            newProduct = {
+              id: currentID + 1,
+              name: values.name,
+              fullPrice: values.fullPrice,
+              prices: {},
+            }
+            
+            props.setColumn([...props.columns, {id: props.columns.length + 1, name: values.name}])
+            newPersons = props.rows.map((product) => {
+              if (values.equalPrice) {
+                personPercents = 100 / (props.columns.length + 1)
+                personPrice = Math.ceil(product.fullPrice / 100 * personPercents);
+                product.prices[props.columns.length + 1] = {price: personPrice, percent: Math.floor(personPercents)}
+
+                props.columns.forEach((person) => {product.prices[person.id] = {price: personPrice, percent: Math.floor(personPercents)}})
+              }
+              else {
+                product.prices[props.columns.length + 1] = {price: "0", percent: "0%"}
+              }
+            return product
+          })
+          props.setRow(newPersons)
+
+          values.name = ''
+          }}>
+            <Form>
+              {/* <label htmlFor='name'>Имя: </label> */}
+              <Field id='name' name='name' placeholder="Введите имя"/>
+              <br/>
+              <Field type='checkbox' name='equalPrice'/> Сравнять стоимость всех товаров с остальными
+              <br/>
+              <button type="submit">Submit</button>
+            </Form>
+        </Formik>
+      </Modal>
       </>
       
 

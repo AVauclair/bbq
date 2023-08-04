@@ -29,12 +29,20 @@ function App() {
     let [columnCellIndex, setColumnCellIndex] = useState()
     let [cellType, setCellType] = useState()
 
-    let DeleteCell = () => {
-      cellType === "row" ? rows.splice(rowCellIndex, 1) : columns.splice(columnCellIndex, 1)
-    }
+    let RecalculatePrices = (columns, product) => {
+        let personPercents = 100 / (columns.length)
+        let personPrice = Math.ceil(product.fullPrice / 100 * personPercents);
+        columns.forEach((person) => {product.prices[person.id] = {price: personPrice, percent: Math.floor(personPercents)}})}
 
-    let columnIndex;
-    let rowIndex;
+    let DeleteCell = () => {
+      if (cellType === "row") {
+        rows.splice(rowCellIndex, 1)
+      }
+      else {
+        columns.splice(columnCellIndex, 1)
+        rows.map((product) => { RecalculatePrices(columns, product) })
+      }
+    }
 
     // debugger
   return (
@@ -71,9 +79,9 @@ function App() {
         </table>
       </div>
 
-      <AddColumn columns={columns} setColumn={setColumn} rows={rows} setRow={setRow}/>
+      <AddColumn columns={columns} setColumn={setColumn} rows={rows} setRow={setRow} RecalculatePrices={RecalculatePrices}/>
       <br/>
-      <AddRow rows={rows} setRow={setRow} columns={columns}/>
+      <AddRow rows={rows} setRow={setRow} columns={columns} RecalculatePrices={RecalculatePrices}/>
       <br/><br/>
       <button onMouseDown={DeleteCell} disabled={buttonDisabled}>DELETE</button>
     </div>
