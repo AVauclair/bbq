@@ -26,7 +26,12 @@ export default function AddRow (props) {
               fullPrice: values.fullPrice,
               prices: {},
             }
-            values.equalPrice ? props.RecalculatePrices(props.columns, newProduct) : props.columns.forEach((person) => {newProduct.prices[person.id] = {price: "0", percent: "0%"}})
+            if (values.equalPrice) {
+              props.RecalculatePrices(props.columns, newProduct)
+            }
+            else {
+              props.columns.forEach((person) => {newProduct.prices[person.id] = {price: "0", percent: "0%"}})
+            }
             props.setRow([...props.rows, newProduct])
 
             values.name = ''
@@ -35,14 +40,15 @@ export default function AddRow (props) {
             }}>
 
           <Form>
-            {/* <label htmlFor='name'>Имя: </label> */}
-            <Field id='name' name='name' placeholder="Введите название товара"/>
-            <br/>
-            <Field id='fullPrice' name='fullPrice' placeholder="Введите стоимость товара"/>
-            <br/>
-            <Field type='checkbox' name='equalPrice'/> Разделить стоимость поровну
-            <br/>
-            <button type="submit">Submit</button>
+            <div style={{display: 'flex', flexDirection: 'column', flexWrap: "wrap", width: "30%", justifyContent: 'center'}}>
+              <Field id='name' name='name' placeholder="Введите название товара"/>
+              {/* <br/> */}
+              <Field id='fullPrice' name='fullPrice' placeholder="Введите стоимость товара"/>
+              {/* <br/> */}
+              <Field type='checkbox' name='equalPrice'/> Разделить стоимость поровну
+              {/* <br/> */}
+              <button type="submit">Submit</button>
+            </div>
           </Form>
         </Formik>
       </Modal>

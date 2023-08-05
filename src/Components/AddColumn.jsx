@@ -49,12 +49,13 @@ export default function AddColumn (props) {
           values.name = ''
           }}>
             <Form>
-              {/* <label htmlFor='name'>Имя: </label> */}
-              <Field id='name' name='name' placeholder="Введите имя"/>
-              <br/>
-              <Field type='checkbox' name='equalPrice'/> Сравнять стоимость всех товаров с остальными
-              <br/>
-              <button type="submit">Submit</button>
+              <div style={{display: 'flex', flexDirection: 'column', flexWrap: "wrap", width: "30%", justifyContent: 'center'}}>
+                <Field id='name' name='name' placeholder="Введите имя"/>
+                {/* <br/> */}
+                <Field type='checkbox' name='equalPrice'/> Сравнять стоимость всех товаров с остальными
+                {/* <br/> */}
+                <button type="submit">Submit</button>
+              </div>
             </Form>
         </Formik>
       </Modal>

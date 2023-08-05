@@ -1,10 +1,9 @@
 import './App.css';
 import React, {useState} from 'react';
-import AddColumn from './Components/AddColumn'
-import AddRow from './Components/AddRow';
-import ColumnCell from './Components/Cells/ColumnCell';
-import RowCell from './Components/Cells/RowCell';
-import MoneyCell from './Components/Cells/MoneyCell';
+import AddColumn from './components/AddColumn'
+import AddRow from './components/AddRow';
+import MoneyCell from './components/cells/MoneyCell';
+import Cell from './components/cells/Cell';
 
 
 function App() {
@@ -30,9 +29,10 @@ function App() {
     let [cellType, setCellType] = useState()
 
     let RecalculatePrices = (columns, product) => {
-        let personPercents = 100 / (columns.length)
-        let personPrice = Math.ceil(product.fullPrice / 100 * personPercents);
-        columns.forEach((person) => {product.prices[person.id] = {price: personPrice, percent: Math.floor(personPercents)}})}
+      let personPercents = 100 / (columns.length)
+      let personPrice = Math.floor(product.fullPrice / 100 * personPercents)
+      columns.forEach((person) => {product.prices[person.id] = {price: personPrice, percent: Math.floor(personPercents)}})
+    }
 
     let DeleteCell = () => {
       if (cellType === "row") {
@@ -54,8 +54,8 @@ function App() {
               <th>Товары</th>
               <th>Стоимость</th>
               {columns.map((person, key) => (
-                  <ColumnCell key={key} person={person} index={key} columns={columns} rows={rows}
-                  setColumn={setColumn} setRow={setRow} setButtonDisable={setButtonDisable} setColumnCellIndex={setColumnCellIndex} setCellType={setCellType}/>
+                  <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rowCellName={"none"} editParam={"name"}
+                  setArray={setColumn} setButtonDisable={setButtonDisable} setArrayCellIndex={setColumnCellIndex} setCellType={setCellType}/>
               ))}
             </tr>
           </thead>
@@ -63,15 +63,15 @@ function App() {
           <tbody>
             {rows.map((row, rowCellIndex) => (
                 <tr key={rowCellIndex}>
-
-                  <RowCell value={row.name} rowCellName={"name"} index={rowCellIndex} rows={rows} 
-                  setRow={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}/>
-                  <RowCell value={row.fullPrice} rowCellName={"fullPrice"} index={rowCellIndex} rows={rows} 
-                  setRow={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}/>
+                  <Cell cellType={"row"} value={row.name} rowCellName={"name"} index={rowCellIndex} array={rows} editParam={"name"}
+                  setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType}/>
+                  <Cell cellType={"row"} value={row.fullPrice} rowCellName={"fullPrice"} index={rowCellIndex} array={rows} columns={columns} editParam={"fullPrice"}
+                  setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices}/>
 
                   {columns.map((person, key) => (
-                    <MoneyCell price={row.prices[person.id].price} percent={row.prices[person.id].percent} rows={rows} rowCellIndex={rowCellIndex} columnCellIndex={key}
-                    setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType}/>
+                    <MoneyCell price={row.prices[person.id].price} percent={row.prices[person.id].percent} rows={rows} columns={columns} rowCellIndex={rowCellIndex} 
+                    columnCellIndex={key}
+                    setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices}/>
                   ))}
                 </tr>
               ))}

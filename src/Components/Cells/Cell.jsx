@@ -1,22 +1,22 @@
 import React, {createRef, useState} from 'react';
 
-export default function ColumnCell (props) {
+export default function Cell (props) {
 
     let [editMode, setEditMode] = useState(false)
     let [isSelected, setSelect] = useState (false)
 
-    let newColumns = [...props.columns]
-    let personElement = createRef()
+    let newArray = [...props.array]
+    let arrayElement = createRef()
 
     let onInputChange = () => {
-        let personName = personElement.current.value
-        newColumns[props.index] = {...newColumns[props.index], name: personName}
-        props.setColumn(newColumns)
+        let elementName = arrayElement.current.value
+        newArray[props.index] = {...newArray[props.index], [props.editParam]: elementName}
+        props.setArray(newArray)
     }
     
     let SelectCell = () => {
-        props.setColumnCellIndex(props.index)
-        props.setCellType("column")
+        props.setArrayCellIndex(props.index)
+        props.setCellType(props.cellType)
         props.setButtonDisable(false);
         setSelect(true);
     }
@@ -24,6 +24,14 @@ export default function ColumnCell (props) {
     let DeselectCell = () => {
         props.setButtonDisable(true)
         setSelect(false);
+    }
+
+    let InputOnBlur = () => {
+        setEditMode(false)
+        if (props.rowCellName === "fullPrice") {
+            props.RecalculatePrices(props.columns, newArray[props.index])
+            props.setArray(newArray)
+        }
     }
 
     let DoubleClickEvent = () => {
@@ -35,18 +43,19 @@ export default function ColumnCell (props) {
         <td>
             {editMode ? 
         <input 
-            ref={personElement} 
+            ref={arrayElement} 
             onChange={onInputChange}
             autoFocus={true} 
-            onBlur={() => {setEditMode(false)}} 
+            onBlur={InputOnBlur} 
+            onKeyDown={ev => ev.key === "Enter" && ev.target.blur()}
             className='input' 
-            defaultValue={props.person.name}/> 
+            defaultValue={props.value}/> 
         : <button 
         className={isSelected ? 'selectedCell' : 'buttonCringe'} 
         onClick={SelectCell} 
-        onBlur={DeselectCell} 
+        onBlur={DeselectCell}
         onDoubleClick={DoubleClickEvent}>
-        {props.person.name}
+        {props.value}
             </button>}</td>
     )
   }
