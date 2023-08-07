@@ -76,6 +76,7 @@ function App() {
                 <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rowCellName={"none"} editParam={"name"}
                   setArray={setColumn} setButtonDisable={setButtonDisable} setArrayCellIndex={setColumnCellIndex} setCellType={setCellType} />
               ))}
+              <th>Разделить<br/>поровну</th>
             </tr>
           </thead>
 
@@ -89,7 +90,7 @@ function App() {
 
                 {columns.map((person, key) => (
                   <MoneyCell price={row.prices[person.id].price} displayedPercent={row.prices[person.id].displayedPercent} rows={rows} columns={columns} 
-                    rowCellIndex={rowCellIndex} columnCellIndex={key}
+                    rowCellIndex={rowCellIndex} columnCellIndex={key} key={key}
                     setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices} />
                 ))}
                 <EqualCheckbox rows={rows} columns={columns} index={rowCellIndex} RecalculatePrices={RecalculatePrices} setRow={setRow}/>

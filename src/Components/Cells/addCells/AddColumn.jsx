@@ -41,7 +41,7 @@ export default function AddColumn(props) {
                   {price: personPrice, displayedPercent: Math.floor(personPercents), realPercent: personPercents, fixed: false}})
               }
               else {
-                product.prices[props.columns.length + 1] = {price: '0', percent: '0%'}
+                product.prices[props.columns.length + 1] = {price: 0, displayedPercent: 0, realPercent: 0, fixed: false}
               }
               return product
             })

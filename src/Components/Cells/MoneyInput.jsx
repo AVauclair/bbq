@@ -4,7 +4,7 @@ export default function MoneyInput(props) {
   let [editMode, setEditMode] = useState(false)
   let [isSelected, setSelect] = useState(false)
   let newRows = [...props.rows]
-  let value
+  let value = null;
 
   let element = createRef()
   let InputOnChange = () => {
@@ -22,47 +22,51 @@ export default function MoneyInput(props) {
     setSelect(false)
   }
 
-  var fixedPersonsCount = 0
-  var fixedPersonsPercent = 0;
-
   let InputOnBlur = () => {
     setEditMode(false)
+    value = parseFloat(element.current.value);
+    let personPrice = 0, personPercents = 0, fixedPersonsCount = 0, fixedPersonsPercent = 0;
 
     if (props.rowCellName === 'price') 
     {
-      value = element.current.value
-      let personPercents = value / (newRows[props.rowCellIndex]['fullPrice'] / 100)
-      let otherPercents;
-
-      otherPercents = (100 - personPercents - fixedPersonsPercent) / (props.columns.length - 1 - fixedPersonsCount)
-      
-      let otherPrice = Math.floor((newRows[props.rowCellIndex]['fullPrice'] / (100 - fixedPersonsPercent)) * otherPercents)
-      
-      props.columns.forEach((person) => { 
-        if (newRows[props.rowCellIndex].prices[person.id].fixed === false) { 
-          newRows[props.rowCellIndex].prices[person.id] = {price: otherPrice, displayedPercent: Math.floor(otherPercents), realPercent: otherPercents, fixed: false}
-        }})
-      
-      newRows[props.rowCellIndex].prices[props.columnCellIndex] = {price: value, displayedPercent: Math.floor(personPercents), realPercent: personPercents, fixed: true}
-      props.setRow(newRows)
-
-      props.columns.forEach((person) => { 
-        if (newRows[props.rowCellIndex].prices[person.id].fixed === true) { 
-          fixedPersonsCount++;
-          fixedPersonsPercent = newRows[props.rowCellIndex].prices[person.id].displayedPercent
-        }})
+      personPercents = value / (newRows[props.rowCellIndex]['fullPrice'] / 100);
+      personPrice = value;
     } 
     else if (props.rowCellName === 'displayedPercent') 
     {
-      value = element.current.value
-      let personPrice = value * (newRows[props.rowCellIndex]['fullPrice'] / 100)
-      let otherPercents = (100 - value) / (props.columns.length - 1)
-      let otherPrice = Math.floor((newRows[props.rowCellIndex]['fullPrice'] / 100) * otherPercents)
-      props.columns.forEach((person) => {newRows[props.rowCellIndex].prices[person.id] = 
-        {price: otherPrice, displayedPercent: Math.floor(otherPercents), realPercent: otherPercents, fixed: false}})
-      newRows[props.rowCellIndex].prices[props.columnCellIndex] = {price: personPrice, displayedPercent: value, realPercent: value, fixed: true}
-      props.setRow(newRows)
+      personPrice = value * newRows[props.rowCellIndex]['fullPrice'] / 100;
+      personPercents = value;
     }
+
+    newRows[props.rowCellIndex].prices[props.columnCellIndex] = {
+      price: personPrice, 
+      displayedPercent: Math.floor(personPercents), 
+      realPercent: personPercents, 
+      fixed: true
+    };
+
+    props.columns.forEach((person) => { 
+      if (newRows[props.rowCellIndex].prices[person.id].fixed === true) { 
+        fixedPersonsCount++;
+        fixedPersonsPercent += newRows[props.rowCellIndex].prices[person.id].realPercent
+      }
+    });
+
+    let otherPercents = (100 - fixedPersonsPercent) / (props.columns.length - fixedPersonsCount);
+    let otherPrice = newRows[props.rowCellIndex]['fullPrice'] / 100 * otherPercents
+    
+    props.columns.forEach((person) => {
+      if (newRows[props.rowCellIndex].prices[person.id].fixed === false) {
+        newRows[props.rowCellIndex].prices[person.id] = {
+          price: otherPrice, 
+          displayedPercent: Math.floor(otherPercents), 
+          realPercent: otherPercents, 
+          fixed: false
+        };
+      }
+    });
+
+    props.setRow(newRows);
   }
 
   let HandleSelect = (ev) => {
@@ -75,7 +79,7 @@ export default function MoneyInput(props) {
     setEditMode(true)
     DeselectCell()
   }
-
+  
   return (
     <div>
       {editMode ? (

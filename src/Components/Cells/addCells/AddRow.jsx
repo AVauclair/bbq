@@ -29,13 +29,13 @@ export default function AddRow(props) {
               props.RecalculatePrices(props.columns, newProduct)
             }
             else {
-              props.columns.forEach((person) => {newProduct.prices[person.id] = { price: '0', displayedPercent: '0%', realPercent: '0', fixed: false }})
+              props.columns.forEach((person) => {newProduct.prices[person.id] = { price: 0, displayedPercent: 0, realPercent: 0, fixed: false }})
             }
             props.setRow([...props.rows, newProduct])
 
             values.name = ''
             values.fullPrice = ''
-            values.equalPrice = 'true'
+            values.equalPrice = true
           }}
         >
           <Form>

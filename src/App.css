@@ -38,4 +38,5 @@ td, th {
 
 .checkbox {
   border: none;
+  transform: scale(2);
 }
