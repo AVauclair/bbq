@@ -58,7 +58,7 @@ export default function MoneyInput(props) {
     props.columns.forEach((person) => {
       if (newRows[props.rowCellIndex].prices[person.id].fixed === false) {
         newRows[props.rowCellIndex].prices[person.id] = {
-          price: otherPrice, 
+          price: Math.ceil(otherPrice), 
           displayedPercent: Math.floor(otherPercents), 
           realPercent: otherPercents, 
           fixed: false

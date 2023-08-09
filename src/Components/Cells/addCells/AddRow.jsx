@@ -4,8 +4,11 @@ import { Form, Formik, Field } from 'formik'
 
 export default function AddRow(props) {
   let [modalActive, setModalActive] = useState()
+  let [dropboxDisabled, setDropboxDisabled] = useState(true)
+  let [checkboxDisabled, setCheckboxDisabled] = useState(false)
   let currentID = 2
   let newProduct = {}
+  let selectedPerson = ''
 
   return (
     <>
@@ -16,7 +19,6 @@ export default function AddRow(props) {
           initialValues={{
             name: '',
             fullPrice: '',
-            equalPrice: true,
           }}
           onSubmit={(values) => {
             newProduct = {
@@ -25,17 +27,17 @@ export default function AddRow(props) {
               fullPrice: values.fullPrice,
               prices: {},
             }
-            if (values.equalPrice) {
+            if (checkboxDisabled === false) {
               props.RecalculatePrices(props.columns, newProduct)
             }
             else {
               props.columns.forEach((person) => {newProduct.prices[person.id] = { price: 0, displayedPercent: 0, realPercent: 0, fixed: false }})
+              newProduct.prices[selectedPerson] = { price: values.fullPrice, displayedPercent: 100, realPercent: 100, fixed: false }
             }
             props.setRow([...props.rows, newProduct])
 
             values.name = ''
             values.fullPrice = ''
-            values.equalPrice = true
           }}
         >
           <Form>
@@ -53,15 +55,24 @@ export default function AddRow(props) {
                 name="name"
                 placeholder="Введите название товара"
               />
-              {/* <br/> */}
               <Field
                 id="fullPrice"
                 name="fullPrice"
                 placeholder="Введите стоимость товара"
               />
-              {/* <br/> */}
-              <Field type="checkbox" name="equalPrice" /> Разделить стоимость поровну
-              {/* <br/> */}
+              <input type={"checkbox"} checked={!checkboxDisabled} onChange={() => {setCheckboxDisabled(!checkboxDisabled); setDropboxDisabled(!dropboxDisabled)}}/> Разделить стоимость поровну
+              <select disabled={dropboxDisabled} onChange={e => { selectedPerson = e.target.selectedIndex}}>
+                {props.columns.map(option => {
+                  return (
+                  <option key={option.id} value={option.name}>
+                    {option.name}
+                  </option>
+                  )
+                },
+                selectedPerson = 0
+                )
+                }
+              </select>
               <button type="submit">Submit</button>
             </div>
           </Form>
