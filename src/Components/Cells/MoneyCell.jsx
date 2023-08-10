@@ -15,6 +15,9 @@ export default function MoneyCell(props) {
         setCellType={props.setCellType}
         setButtonDisable={props.setButtonDisable}
         setRow={props.setRow}
+        setCheckbox={props.setCheckbox}
+        setDisabledCheckbox={props.setDisabledCheckbox}
+        checkboxElement={props.checkboxElement} setCheckboxElement={props.setCheckboxElement}
       />
       <MoneyInput
         rows={props.rows}
@@ -28,6 +31,9 @@ export default function MoneyCell(props) {
         setCellType={props.setCellType}
         setButtonDisable={props.setButtonDisable}
         setRow={props.setRow}
+        setCheckbox={props.setCheckbox}
+        setDisabledCheckbox={props.setDisabledCheckbox}
+        checkboxElement={props.checkboxElement} setCheckboxElement={props.setCheckboxElement}
       />
     </td>
   )

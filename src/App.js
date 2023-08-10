@@ -5,6 +5,7 @@ import AddRow from './components/cells/addCells/AddRow';
 import MoneyCell from './components/cells/MoneyCell';
 import Cell from './components/cells/Cell';
 import EqualCheckbox from './components/cells/EqualCheckbox'
+import Rows from './components/cells/Rows'
 
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
   let [buttonDisabled, setButtonDisable] = useState(true)
   let [rowCellIndex, setRowCellIndex] = useState()
   let [columnCellIndex, setColumnCellIndex] = useState()
-  let [cellType, setCellType] = useState()
+  let [cellType, setCellType] = useState()  
 
   let RecalculatePrices = (columns, product) => {
     let personPercent = 100 / columns.length
@@ -79,22 +80,24 @@ function App() {
               <th>Разделить<br/>поровну</th>
             </tr>
           </thead>
-
           <tbody>
             {rows.map((row, rowCellIndex) => (
-              <tr key={rowCellIndex}>
-                <Cell cellType={"row"} value={row.name} rowCellName={"name"} index={rowCellIndex} array={rows} editParam={"name"}
-                  setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} />
-                <Cell cellType={"row"} value={row.fullPrice} rowCellName={"fullPrice"} index={rowCellIndex} array={rows} columns={columns} editParam={"fullPrice"} sign={"₽"}
-                  setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices} />
+              // <tr key={rowCellIndex}>
+              //   <Cell cellType={"row"} value={row.name} rowCellName={"name"} index={rowCellIndex} array={rows} editParam={"name"}
+              //     setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} />
+              //   <Cell cellType={"row"} value={row.fullPrice} rowCellName={"fullPrice"} index={rowCellIndex} array={rows} columns={columns} editParam={"fullPrice"} sign={"₽"}
+              //     setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices} />
 
-                {columns.map((person, key) => (
-                  <MoneyCell price={row.prices[person.id].price} displayedPercent={row.prices[person.id].displayedPercent} rows={rows} columns={columns} 
-                    rowCellIndex={rowCellIndex} columnCellIndex={key} key={key}
-                    setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices} />
-                ))}
-                <EqualCheckbox rows={rows} columns={columns} index={rowCellIndex} RecalculatePrices={RecalculatePrices} setRow={setRow}/>
-              </tr>
+              //   {columns.map((person, key) => (
+              //     <MoneyCell price={row.prices[person.id].price} displayedPercent={row.prices[person.id].displayedPercent} rows={rows} columns={columns} 
+              //       rowCellIndex={rowCellIndex} columnCellIndex={key} key={key}
+              //       setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices}/>
+              //   ))}
+              //   <EqualCheckbox rows={rows} columns={columns} index={rowCellIndex} RecalculatePrices={RecalculatePrices} setRow={setRow}/>
+              // </tr>
+              <Rows row={row} rows={rows} columns={columns} rowCellIndex={rowCellIndex} index={rowCellIndex} array={rows} 
+              setRow={setRow} setArray={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setArrayCellIndex={setRowCellIndex} setCellType={setCellType}
+              RecalculatePrices={RecalculatePrices}/>
             ))}
           </tbody>
         </table>

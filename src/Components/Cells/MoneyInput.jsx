@@ -67,6 +67,9 @@ export default function MoneyInput(props) {
     });
 
     props.setRow(newRows);
+    props.setCheckbox(false)
+    props.setDisabledCheckbox(false)
+    props.setCheckboxElement(false)
   }
 
   let HandleSelect = (ev) => {

@@ -2,31 +2,24 @@ import React, { useState } from 'react'
 
 export default function MoneyCell(props) {
     let newRows = [...props.rows]
-    let [checkbox, setCheckbox] = useState(false)
-    // let checkbox = false;
-
-    
-     //а тут тип мб
-    //а тут надо перебрать все цены в строке
-    //и если у кого-нибудь есть фиксед
-    //значит галочка false
-    //а в InputOnChange просто всем ставить фиксед false
 
     let InputOnChange = () => {
-      setCheckbox(checkbox = !checkbox)
-        if (checkbox) {
+      props.setCheckbox(!props.checkbox)
+      props.setCheckboxElement(!props.checkboxElement)
+        if (props.checkbox) {
           props.rows.forEach((product) => { 
             props.columns.forEach((person) => {
               if (newRows[product.id].prices[person.id].fixed === true) { 
-                setCheckbox(checkbox = false)
+                props.setCheckbox(false)
               }
             })
-          });
-            // props.RecalculatePrices(props.columns, newRows[props.index])
-            // props.setRow(newRows)
+          })
+            props.setDisabledCheckbox(true)
+            props.RecalculatePrices(props.columns, newRows[props.index])
+            props.setRow(newRows)
         }
-        console.log(checkbox)
         // props.columns.forEach((person) => {newRows[props.rowCellIndex].prices[person.id].fixed = false});
+      // console.log(props.checkbox)
     }
 
   return (
@@ -34,7 +27,8 @@ export default function MoneyCell(props) {
       <input 
       type={"checkbox"}
       onChange={InputOnChange}
-      checked={checkbox}/>
+      disabled={props.disabledCheckbox}
+      checked={props.checkboxElement}/>
     </td>
   )
 }
