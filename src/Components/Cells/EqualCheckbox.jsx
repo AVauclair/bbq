@@ -5,7 +5,10 @@ export default function MoneyCell(props) {
 
     let InputOnChange = () => {
       props.setCheckbox(!props.checkbox)
-      props.setCheckboxElement(!props.checkboxElement)
+      props.setCheckboxChecked(!props.checkboxChecked)
+      props.setDisabledCheckbox(true)
+      props.RecalculatePrices(props.columns, newRows[props.index])
+      props.setRow(newRows)
         if (props.checkbox) {
           props.rows.forEach((product) => { 
             props.columns.forEach((person) => {
@@ -14,12 +17,7 @@ export default function MoneyCell(props) {
               }
             })
           })
-            props.setDisabledCheckbox(true)
-            props.RecalculatePrices(props.columns, newRows[props.index])
-            props.setRow(newRows)
         }
-        // props.columns.forEach((person) => {newRows[props.rowCellIndex].prices[person.id].fixed = false});
-      // console.log(props.checkbox)
     }
 
   return (
@@ -28,7 +26,7 @@ export default function MoneyCell(props) {
       type={"checkbox"}
       onChange={InputOnChange}
       disabled={props.disabledCheckbox}
-      checked={props.checkboxElement}/>
+      checked={props.checkboxChecked}/>
     </td>
   )
 }

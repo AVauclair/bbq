@@ -6,6 +6,7 @@ import MoneyCell from './components/cells/MoneyCell';
 import Cell from './components/cells/Cell';
 import EqualCheckbox from './components/cells/EqualCheckbox'
 import Rows from './components/cells/Rows'
+import Summary from './components/cells/Summary';
 
 
 function App() {
@@ -82,23 +83,12 @@ function App() {
           </thead>
           <tbody>
             {rows.map((row, rowCellIndex) => (
-              // <tr key={rowCellIndex}>
-              //   <Cell cellType={"row"} value={row.name} rowCellName={"name"} index={rowCellIndex} array={rows} editParam={"name"}
-              //     setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} />
-              //   <Cell cellType={"row"} value={row.fullPrice} rowCellName={"fullPrice"} index={rowCellIndex} array={rows} columns={columns} editParam={"fullPrice"} sign={"₽"}
-              //     setArray={setRow} setButtonDisable={setButtonDisable} setArrayCellIndex={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices} />
-
-              //   {columns.map((person, key) => (
-              //     <MoneyCell price={row.prices[person.id].price} displayedPercent={row.prices[person.id].displayedPercent} rows={rows} columns={columns} 
-              //       rowCellIndex={rowCellIndex} columnCellIndex={key} key={key}
-              //       setRow={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setCellType={setCellType} RecalculatePrices={RecalculatePrices}/>
-              //   ))}
-              //   <EqualCheckbox rows={rows} columns={columns} index={rowCellIndex} RecalculatePrices={RecalculatePrices} setRow={setRow}/>
-              // </tr>
-              <Rows row={row} rows={rows} columns={columns} rowCellIndex={rowCellIndex} index={rowCellIndex} array={rows} 
-              setRow={setRow} setArray={setRow} setButtonDisable={setButtonDisable} setRowCellID={setRowCellIndex} setArrayCellIndex={setRowCellIndex} setCellType={setCellType}
+              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex}
+              setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
               RecalculatePrices={RecalculatePrices}/>
             ))}
+            <th>Итого</th>
+            <Summary rows={rows} columns={columns}/>
           </tbody>
         </table>
       </div>

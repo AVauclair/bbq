@@ -29,12 +29,12 @@ export default function AddColumn(props) {
               prices: {},
             }
 
-            props.setColumn([...props.columns, { id: props.columns.length + 1, name: values.name }])
+            props.setColumn([...props.columns, { id: props.columns.length, name: values.name }])
             newPersons = props.rows.map((product) => {
               if (values.equalPrice) {
                 personPercents = 100 / (props.columns.length + 1)
                 personPrice = Math.ceil((product.fullPrice / 100) * personPercents)
-                product.prices[props.columns.length + 1] = 
+                product.prices[props.columns.length] = 
                 {price: personPrice, displayedPercent: Math.floor(personPercents), realPercent: personPercents, fixed: false}
 
                 props.columns.forEach((person) => {product.prices[person.id] = 

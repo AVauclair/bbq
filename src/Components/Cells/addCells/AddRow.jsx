@@ -61,7 +61,7 @@ export default function AddRow(props) {
                 placeholder="Введите стоимость товара"
               />
               <input type={"checkbox"} checked={!checkboxDisabled} onChange={() => {setCheckboxDisabled(!checkboxDisabled); setDropboxDisabled(!dropboxDisabled)}}/> Разделить стоимость поровну
-              <select disabled={dropboxDisabled} onChange={e => { selectedPerson = e.target.selectedIndex}}>
+              <select disabled={dropboxDisabled} onChange={e => { selectedPerson = e.target.selectedIndex; console.log(props.columns, e.target.selectedIndex)}}>
                 {props.columns.map(option => {
                   return (
                   <option key={option.id} value={option.name}>
