@@ -2,9 +2,7 @@ import './App.css';
 import React, { useState } from 'react';
 import AddColumn from './components/cells/addCells/AddColumn'
 import AddRow from './components/cells/addCells/AddRow';
-import MoneyCell from './components/cells/MoneyCell';
 import Cell from './components/cells/Cell';
-import EqualCheckbox from './components/cells/EqualCheckbox'
 import Rows from './components/cells/Rows'
 import Summary from './components/cells/Summary';
 
@@ -55,6 +53,17 @@ function App() {
     columns.forEach((person) => {product.prices[person.id] = { price: personPrice, displayedPercent: Math.floor(personPercent), realPercent: personPercent, fixed: false }})
   }
 
+  let sumFullPrice = 0;
+  let sumPersonsPrice = []
+  let SummaryCalc = () => {
+      rows.forEach((row) => {sumFullPrice += row.fullPrice})
+      columns.forEach((column) => {
+          {sumPersonsPrice[column.id] = rows.reduce((sum, row) => {
+            return (sum + row.prices[column.id].price)
+          }, 0)}
+          })
+  }
+
   let DeleteCell = () => {
     if (cellType === "row") {
       rows.splice(rowCellIndex, 1)
@@ -88,14 +97,14 @@ function App() {
               RecalculatePrices={RecalculatePrices}/>
             ))}
             <th>Итого</th>
-            <Summary rows={rows} columns={columns}/>
+            <Summary rows={rows} columns={columns} SummaryCalc={SummaryCalc} sumFullPrice={sumFullPrice} sumPersonsPrice={sumPersonsPrice}/>
           </tbody>
         </table>
       </div>
 
       <AddColumn columns={columns} setColumn={setColumn} rows={rows} setRow={setRow} RecalculatePrices={RecalculatePrices} />
       <br />
-      <AddRow rows={rows} setRow={setRow} columns={columns} RecalculatePrices={RecalculatePrices} />
+      <AddRow rows={rows} setRow={setRow} columns={columns} RecalculatePrices={RecalculatePrices}/>
       <br /><br />
       <button onMouseDown={DeleteCell} disabled={buttonDisabled}>DELETE</button>
     </div>

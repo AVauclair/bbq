@@ -17,7 +17,7 @@ export default function Cell(props) {
   }
 
   let SelectCell = () => {
-    props.setRowCellIndex(props.index)
+    props.setArrayCellIndex(props.index)
     props.setCellType(props.cellType)
     props.setButtonDisable(false)
     setSelect(true)

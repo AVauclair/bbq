@@ -12,9 +12,9 @@ export default function Rows(props) {
     return (
         <tr key={props.rowCellIndex}>
             <Cell cellType={"row"} value={props.row.name} rowCellName={"name"} index={props.index} array={props.rows} editParam={"name"}
-                setArray={props.setArray} setButtonDisable={props.setButtonDisable} setRowCellIndex={props.setRowCellIndex} setCellType={props.setCellType} />
+                setArray={props.setArray} setButtonDisable={props.setButtonDisable} setArrayCellIndex={props.setRowCellIndex} setCellType={props.setCellType} />
             <Cell cellType={"row"} value={props.row.fullPrice} rowCellName={"fullPrice"} index={props.index} array={props.rows} columns={props.columns} editParam={"fullPrice"} sign={"₽"}
-                setArray={props.setArray} setButtonDisable={props.setButtonDisable} setRowCellIndex={props.setRowCellIndex} setCellType={props.setCellType} RecalculatePrices={props.RecalculatePrices} />
+                setArray={props.setArray} setButtonDisable={props.setButtonDisable} setArrayCellIndex={props.setRowCellIndex} setCellType={props.setCellType} RecalculatePrices={props.RecalculatePrices} />
 
             {props.columns.map((person, key) => (
                 <MoneyCell key={key} price={props.row.prices[person.id].price} displayedPercent={props.row.prices[person.id].displayedPercent} rows={props.rows} columns={props.columns} 
