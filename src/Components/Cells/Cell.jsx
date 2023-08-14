@@ -1,8 +1,12 @@
 import React, { createRef, useState } from 'react'
+import { ChromePicker } from 'react-color'
 
 export default function Cell(props) {
   let [editMode, setEditMode] = useState(false)
   let [isSelected, setSelect] = useState(false)
+
+  let [color, setColor] = useState('#fff')
+  let [displayColorPicker, setDisplayColorPicker] = useState(false)
 
   let newArray = [...props.array]
   let arrayElement = createRef()
@@ -40,6 +44,7 @@ export default function Cell(props) {
     setEditMode(true)
     DeselectCell()
   }
+  
 
   return (
     <td>
@@ -56,6 +61,7 @@ export default function Cell(props) {
       ) : (
         <button
           className={isSelected ? 'selectedCell' : 'buttonCringe'}
+          style={{color: color.hex}}
           onClick={SelectCell}
           onBlur={DeselectCell}
           onDoubleClick={DoubleClickEvent}
@@ -63,6 +69,17 @@ export default function Cell(props) {
           {props.value} {props.sign}
         </button>
       )}
+
+      
+
+      {props.cellType === "column"
+          ? <>
+              <img src='./../../images/colorpicker' onClick={() => setDisplayColorPicker(displayColorPicker = !displayColorPicker)} onBlur={() => setDisplayColorPicker(false)}/> 
+              {displayColorPicker === true
+                ? <ChromePicker color={color} onChange={changedColor => setColor(changedColor)}/> 
+                : null}
+            </>
+          : null}
     </td>
   )
 }
