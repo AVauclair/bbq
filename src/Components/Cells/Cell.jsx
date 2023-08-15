@@ -11,6 +11,10 @@ export default function Cell(props) {
   let newArray = [...props.array]
   let arrayElement = createRef()
 
+  let personColors = []
+  let selectedPerson = ''
+
+
   let InputOnChange = () => {
     let elementName = arrayElement.current.value
     newArray[props.index] = {
@@ -45,7 +49,6 @@ export default function Cell(props) {
     DeselectCell()
   }
   
-
   return (
     <td>
       {editMode ? (
@@ -61,7 +64,7 @@ export default function Cell(props) {
       ) : (
         <button
           className={isSelected ? 'selectedCell' : 'buttonCringe'}
-          style={{color: color.hex}}
+          style={{color: props.rowCellName === "name" ? props.productColor : props.personColor}}
           onClick={SelectCell}
           onBlur={DeselectCell}
           onDoubleClick={DoubleClickEvent}
@@ -76,10 +79,33 @@ export default function Cell(props) {
           ? <>
               <img src='./../../images/colorpicker' onClick={() => setDisplayColorPicker(displayColorPicker = !displayColorPicker)} onBlur={() => setDisplayColorPicker(false)}/> 
               {displayColorPicker === true
-                ? <ChromePicker color={color} onChange={changedColor => setColor(changedColor)}/> 
+                ? <ChromePicker color={color} onChange={changedColor => {
+                  setColor(changedColor.hex)
+                  newArray[props.index] = {...newArray[props.index], 'color': changedColor.hex}
+                  props.setArray(newArray)
+                }}/> 
                 : null}
             </>
           : null}
+
+      {props.rowCellName === "name"
+      ? <>
+        <select onChange={e => { 
+          selectedPerson = e.target.selectedIndex
+          newArray[props.index] = {...newArray[props.index], 'color': personColors[e.target.selectedIndex]}
+          props.setArray(newArray)
+          }}>
+        {props.columns.map(option => {
+          personColors[option.id] = option.color
+          return (
+          <option key={option.id} value={option.name}>
+            {option.name}
+          </option>
+          )}, selectedPerson = 0)
+        }
+      </select>
+        </>
+      : null}
     </td>
   )
 }

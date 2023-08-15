@@ -11,7 +11,7 @@ export default function Rows(props) {
 
     return (
         <tr key={props.rowCellIndex}>
-            <Cell cellType={"row"} value={props.row.name} rowCellName={"name"} index={props.index} array={props.rows} editParam={"name"}
+            <Cell cellType={"row"} value={props.row.name} rowCellName={"name"} index={props.index} array={props.rows} columns={props.columns} editParam={"name"} productColor={props.productColor}
                 setArray={props.setArray} setButtonDisable={props.setButtonDisable} setArrayCellIndex={props.setRowCellIndex} setCellType={props.setCellType} />
             <Cell cellType={"row"} value={props.row.fullPrice} rowCellName={"fullPrice"} index={props.index} array={props.rows} columns={props.columns} editParam={"fullPrice"} sign={"₽"}
                 setArray={props.setArray} setButtonDisable={props.setButtonDisable} setArrayCellIndex={props.setRowCellIndex} setCellType={props.setCellType} RecalculatePrices={props.RecalculatePrices} />

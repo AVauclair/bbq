@@ -11,13 +11,13 @@ function App() {
 
   // let [columns, setColumn] = useState(["Олег", "Вадик", "Арина"])
   let [columns, setColumn] = useState([
-    { id: 0, name: "Олег" },
-    { id: 1, name: "Вадик" },
-    { id: 2, name: "Арина" }]);
+    { id: 0, name: "Олег", color: "#98EA72" },
+    { id: 1, name: "Вадик", color: "#EF8383" },
+    { id: 2, name: "Арина", color: "#71AFF5" }]);
 
   let [rows, setRow] = useState([
     {
-      id: 0, name: "Макароны", fullPrice: 2000, prices:
+      id: 0, name: "Макароны", color: "#fff", fullPrice: 2000, prices:
       {
         0: { price: 123, displayedPercent: 123, realPercent: 123.1, fixed: false },
         1: { price: 678, displayedPercent: 678, realPercent: 123.1, fixed: false },
@@ -25,7 +25,7 @@ function App() {
       }
     },
     {
-      id: 1, name: "Помидоры", fullPrice: 3000, prices:
+      id: 1, name: "Помидоры", color: "#fff", fullPrice: 3000, prices:
       {
         0: { price: 234, displayedPercent: 234, realPercent: 123.1, fixed: false },
         1: { price: 789, displayedPercent: 789, realPercent: 123.1, fixed: false },
@@ -33,7 +33,7 @@ function App() {
       }
     },
     {
-      id: 2, name: "Огурцы", fullPrice: 5000, prices:
+      id: 2, name: "Огурцы", color: "#fff", fullPrice: 5000, prices:
       {
         0: { price: 456, displayedPercent: 456, realPercent: 123.1, fixed: false },
         1: { price: 567, displayedPercent: 567, realPercent: 123.1, fixed: false },
@@ -84,7 +84,7 @@ function App() {
               <th>Товары</th>
               <th>Стоимость</th>
               {columns.map((person, key) => (
-                <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rowCellName={"none"} editParam={"name"}
+                <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rowCellName={"none"} editParam={"name"} personColor={person.color}
                   setArray={setColumn} setButtonDisable={setButtonDisable} setArrayCellIndex={setColumnCellIndex} setCellType={setCellType} />
               ))}
               <th>Разделить<br/>поровну</th>
@@ -92,7 +92,7 @@ function App() {
           </thead>
           <tbody>
             {rows.map((row, rowCellIndex) => (
-              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex}
+              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color}
               setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
               RecalculatePrices={RecalculatePrices}/>
             ))}

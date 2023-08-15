@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Modal from "./../../Modal"
 import { Form, Formik, Field } from 'formik'
+import { ChromePicker } from 'react-color'
 
 export default function AddColumn(props) {
   let [modalActive, setModalActive] = useState()
+  let [color, setColor] = useState('#fff')
   let newPersons
   let newProduct = {}
   let personPercents
@@ -29,7 +31,7 @@ export default function AddColumn(props) {
               prices: {},
             }
 
-            props.setColumn([...props.columns, { id: props.columns.length, name: values.name }])
+            props.setColumn([...props.columns, { id: props.columns.length, name: values.name, color: color.hex }])
             newPersons = props.rows.map((product) => {
               if (values.equalPrice) {
                 personPercents = 100 / (props.columns.length + 1)
@@ -60,10 +62,11 @@ export default function AddColumn(props) {
                 justifyContent: 'center',
               }}
             >
-              <Field id="name" name="name" placeholder="Введите имя" />
+              <Field id="name" name="name" placeholder="Введите имя" style={{color: !color.hex ? "#FFFFFF" : color.hex, backgroundColor: '#282c34', fontWeight: 'bold'}}/>
               {/* <br/> */}
               <Field type="checkbox" name="equalPrice" /> Сравнять стоимость всех товаров с остальными
               {/* <br/> */}
+              <ChromePicker color={color} onChange={changedColor => setColor(changedColor)}/>
               <button type="submit">Submit</button>
             </div>
           </Form>
