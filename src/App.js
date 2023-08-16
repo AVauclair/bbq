@@ -45,7 +45,8 @@ function App() {
   let [buttonDisabled, setButtonDisable] = useState(true)
   let [rowCellIndex, setRowCellIndex] = useState()
   let [columnCellIndex, setColumnCellIndex] = useState()
-  let [cellType, setCellType] = useState()  
+  let [cellType, setCellType] = useState()
+  let [selectedPerson, setSelectedPerson] = useState(0)
 
   let RecalculatePrices = (columns, product) => {
     let personPercent = 100 / columns.length
@@ -81,7 +82,18 @@ function App() {
         <table>
           <thead>
             <tr>
-              <th>Товары</th>
+              <th>Товары
+                <select onChange={e => {setSelectedPerson(e.target.selectedIndex)}}>
+                  
+                {columns.map(option => {
+                  return (
+                    <option key={option.id} value={option.name}>
+                    {option.name}
+                    </option>
+                  )}, selectedPerson = 0)
+                 }
+                </select>
+              </th>
               <th>Стоимость</th>
               {columns.map((person, key) => (
                 <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rowCellName={"none"} editParam={"name"} personColor={person.color}
@@ -92,7 +104,7 @@ function App() {
           </thead>
           <tbody>
             {rows.map((row, rowCellIndex) => (
-              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color}
+              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
               setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
               RecalculatePrices={RecalculatePrices}/>
             ))}

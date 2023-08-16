@@ -29,6 +29,7 @@ export default function Cell(props) {
     props.setCellType(props.cellType)
     props.setButtonDisable(false)
     setSelect(true)
+    console.log(props.selectedPerson)
   }
 
   let DeselectCell = () => {
@@ -71,7 +72,8 @@ export default function Cell(props) {
         >
           {props.value} {props.sign}
         </button>
-      )}
+      )
+      }
 
       
 
