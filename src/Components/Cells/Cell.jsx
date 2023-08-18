@@ -1,5 +1,6 @@
 import React, { createRef, useState } from 'react'
 import { ChromePicker } from 'react-color'
+import colorPickerPNG from './../../images/colorpicker.png'
 
 export default function Cell(props) {
   let [editMode, setEditMode] = useState(false)
@@ -79,7 +80,7 @@ export default function Cell(props) {
 
       {props.cellType === "column"
           ? <>
-              <img src='./../../images/colorpicker' onClick={() => setDisplayColorPicker(displayColorPicker = !displayColorPicker)} onBlur={() => setDisplayColorPicker(false)}/> 
+              <img src={colorPickerPNG} onClick={() => setDisplayColorPicker(displayColorPicker = !displayColorPicker)} onBlur={() => setDisplayColorPicker(false)}/> 
               {displayColorPicker === true
                 ? <ChromePicker color={color} onChange={changedColor => {
                   setColor(changedColor.hex)
@@ -92,18 +93,18 @@ export default function Cell(props) {
 
       {props.rowCellName === "name"
       ? <>
-        <select onChange={e => { 
-          selectedPerson = e.target.selectedIndex
+        <select defaultValue={"Выберите человека"} onChange={e => {
           newArray[props.index] = {...newArray[props.index], 'color': personColors[e.target.selectedIndex]}
           props.setArray(newArray)
           }}>
+        <option disabled>Выберите человека</option>
         {props.columns.map(option => {
-          personColors[option.id] = option.color
+          personColors[option.id + 1] = option.color
           return (
           <option key={option.id} value={option.name}>
             {option.name}
           </option>
-          )}, selectedPerson = 0)
+          )})
         }
       </select>
         </>

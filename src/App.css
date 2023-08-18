@@ -18,6 +18,15 @@ td, th {
   box-sizing: border-box;
 }
 
+img {
+  width: 20px;
+  cursor: pointer;
+}
+
+select {
+  width: 18px
+}
+
 .selectedCell {
   background-color: green;
   border: none;

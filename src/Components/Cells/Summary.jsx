@@ -5,7 +5,7 @@ export default function Summary(props) {
     <>
     {props.SummaryCalc()}
     <th>{props.sumFullPrice}</th>
-    {props.columns.map((sumPersonPrice) => (<th>{props.sumPersonsPrice[sumPersonPrice.id]}</th>))}
+    {props.columns.map((sumPersonPrice) => (<th>{props.sumPersonsPrice[sumPersonPrice.id]} ₽</th>))}
     </>
   )
 }

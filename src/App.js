@@ -9,7 +9,6 @@ import Summary from './components/cells/Summary';
 
 function App() {
 
-  // let [columns, setColumn] = useState(["Олег", "Вадик", "Арина"])
   let [columns, setColumn] = useState([
     { id: 0, name: "Олег", color: "#98EA72" },
     { id: 1, name: "Вадик", color: "#EF8383" },
@@ -48,6 +47,8 @@ function App() {
   let [cellType, setCellType] = useState()
   let [selectedPerson, setSelectedPerson] = useState(0)
 
+  let selectedPerson2 = 0
+
   let RecalculatePrices = (columns, product) => {
     let personPercent = 100 / columns.length
     let personPrice = Math.floor(product.fullPrice / 100 * personPercent)
@@ -83,14 +84,27 @@ function App() {
           <thead>
             <tr>
               <th>Товары
-                <select onChange={e => {setSelectedPerson(e.target.selectedIndex)}}>
-                  
+                <select onChange={e => {
+                  if (e.target.selectedIndex !== 0)
+                  {
+                    selectedPerson2 = e.target.selectedIndex - 1
+                    console.log("index:" + e.target.selectedIndex)
+                    console.log("selectedPerson:" + selectedPerson2)
+                  }
+                  else {
+                    selectedPerson2 = -1
+                    console.log("index:" + e.target.selectedIndex)
+                    console.log("selectedPerson:" + selectedPerson2)
+                    rows.forEach((product) => {RecalculatePrices(columns, product)})
+                  }
+                  }}>
+                <option key={0} value="Все">Все</option>
                 {columns.map(option => {
                   return (
-                    <option key={option.id} value={option.name}>
+                    <option key={option.id + 1} value={option.name}>
                     {option.name}
                     </option>
-                  )}, selectedPerson = 0)
+                  )})
                  }
                 </select>
               </th>
@@ -104,9 +118,9 @@ function App() {
           </thead>
           <tbody>
             {rows.map((row, rowCellIndex) => (
-              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
+              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson2}
               setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
-              RecalculatePrices={RecalculatePrices}/>
+              RecalculatePrices={RecalculatePrices} setSelectedPerson={setSelectedPerson}/>
             ))}
             <th>Итого</th>
             <Summary rows={rows} columns={columns} SummaryCalc={SummaryCalc} sumFullPrice={sumFullPrice} sumPersonsPrice={sumPersonsPrice}/>

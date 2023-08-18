@@ -12,10 +12,10 @@ export default function Rows(props) {
     return (
         <tr key={props.rowCellIndex}>
             <Cell cellType={"row"} value={props.row.name} rowCellName={"name"} index={props.index} array={props.rows} columns={props.columns} editParam={"name"} productColor={props.productColor}
-                selectedPerson={props.selectedPerson}
+                selectedPerson={props.selectedPerson} setSelectedPerson={props.setSelectedPerson}
                 setArray={props.setArray} setButtonDisable={props.setButtonDisable} setArrayCellIndex={props.setRowCellIndex} setCellType={props.setCellType} />
             <Cell cellType={"row"} value={props.row.fullPrice} rowCellName={"fullPrice"} index={props.index} array={props.rows} columns={props.columns} editParam={"fullPrice"} sign={"₽"}
-                selectedPerson={props.selectedPerson}
+                selectedPerson={props.selectedPerson} setSelectedPerson={props.setSelectedPerson}
                 setArray={props.setArray} setButtonDisable={props.setButtonDisable} setArrayCellIndex={props.setRowCellIndex} setCellType={props.setCellType} RecalculatePrices={props.RecalculatePrices} />
 
             {props.columns.map((person, key) => (
