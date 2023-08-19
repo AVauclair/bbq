@@ -85,6 +85,11 @@ export default function Cell(props) {
                 ? <ChromePicker color={color} onChange={changedColor => {
                   setColor(changedColor.hex)
                   newArray[props.index] = {...newArray[props.index], 'color': changedColor.hex}
+                  props.rows.forEach((product) => {
+                    if (props.rows[product.id].prices[props.index].purchaser === true) {
+                      props.rows[product.id].color = changedColor.hex
+                    }
+                  })
                   props.setArray(newArray)
                 }}/> 
                 : null}
@@ -95,7 +100,10 @@ export default function Cell(props) {
       ? <>
         <select defaultValue={"Выберите человека"} onChange={e => {
           newArray[props.index] = {...newArray[props.index], 'color': personColors[e.target.selectedIndex]}
+          props.columns.forEach((person) => {newArray[props.index].prices[person.id] = {...newArray[props.index].prices[person.id], purchaser: false}})
+          newArray[props.index].prices[e.target.selectedIndex - 1] = {...newArray[props.index].prices[e.target.selectedIndex - 1], purchaser: true}
           props.setArray(newArray)
+          console.log(newArray)
           }}>
         <option disabled>Выберите человека</option>
         {props.columns.map(option => {

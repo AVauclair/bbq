@@ -18,25 +18,25 @@ function App() {
     {
       id: 0, name: "Макароны", color: "#fff", fullPrice: 2000, prices:
       {
-        0: { price: 123, displayedPercent: 123, realPercent: 123.1, fixed: false },
-        1: { price: 678, displayedPercent: 678, realPercent: 123.1, fixed: false },
-        2: { price: 987, displayedPercent: 987, realPercent: 123.1, fixed: false }
+        0: { price: 123, displayedPercent: 123, realPercent: 123.1, fixed: false, purchaser: false },
+        1: { price: 678, displayedPercent: 678, realPercent: 123.1, fixed: false, purchaser: false },
+        2: { price: 987, displayedPercent: 987, realPercent: 123.1, fixed: false, purchaser: false }
       }
     },
     {
       id: 1, name: "Помидоры", color: "#fff", fullPrice: 3000, prices:
       {
-        0: { price: 234, displayedPercent: 234, realPercent: 123.1, fixed: false },
-        1: { price: 789, displayedPercent: 789, realPercent: 123.1, fixed: false },
-        2: { price: 654, displayedPercent: 654, realPercent: 123.1, fixed: false }
+        0: { price: 234, displayedPercent: 234, realPercent: 123.1, fixed: false, purchaser: false },
+        1: { price: 789, displayedPercent: 789, realPercent: 123.1, fixed: false, purchaser: false },
+        2: { price: 654, displayedPercent: 654, realPercent: 123.1, fixed: false, purchaser: false }
       }
     },
     {
       id: 2, name: "Огурцы", color: "#fff", fullPrice: 5000, prices:
       {
-        0: { price: 456, displayedPercent: 456, realPercent: 123.1, fixed: false },
-        1: { price: 567, displayedPercent: 567, realPercent: 123.1, fixed: false },
-        2: { price: 678, displayedPercent: 678, realPercent: 123.1, fixed: false }
+        0: { price: 456, displayedPercent: 456, realPercent: 123.1, fixed: false, purchaser: false },
+        1: { price: 567, displayedPercent: 567, realPercent: 123.1, fixed: false, purchaser: false },
+        2: { price: 678, displayedPercent: 678, realPercent: 123.1, fixed: false, purchaser: false }
       }
     },
   ])
@@ -110,7 +110,7 @@ function App() {
               </th>
               <th>Стоимость</th>
               {columns.map((person, key) => (
-                <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rowCellName={"none"} editParam={"name"} personColor={person.color}
+                <Cell cellType={"column"} key={key} value={person.name} index={key} array={columns} rows={rows} rowCellName={"none"} editParam={"name"} personColor={person.color}
                   setArray={setColumn} setButtonDisable={setButtonDisable} setArrayCellIndex={setColumnCellIndex} setCellType={setCellType} />
               ))}
               <th>Разделить<br/>поровну</th>
