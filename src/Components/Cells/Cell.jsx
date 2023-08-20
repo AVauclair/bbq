@@ -98,7 +98,7 @@ export default function Cell(props) {
 
       {props.rowCellName === "name"
       ? <>
-        <select defaultValue={"Выберите человека"} onChange={e => {
+        <select className='purchaserSelect' defaultValue={"Выберите человека"} onChange={e => {
           newArray[props.index] = {...newArray[props.index], 'color': personColors[e.target.selectedIndex]}
           props.columns.forEach((person) => {newArray[props.index].prices[person.id] = {...newArray[props.index].prices[person.id], purchaser: false}})
           newArray[props.index].prices[e.target.selectedIndex - 1] = {...newArray[props.index].prices[e.target.selectedIndex - 1], purchaser: true}

@@ -24,17 +24,22 @@ export default function AddRow(props) {
             newProduct = {
               id: currentID + 1,
               name: values.name,
-              fullPrice: values.fullPrice,
-              prices: {},
+              fullPrice: parseFloat(values.fullPrice),
+              prices: {}
             }
             if (checkboxDisabled === false) {
-              props.RecalculatePrices(props.columns, newProduct)
+              // props.RecalculatePrices(props.columns, newProduct)
+              let personPercent = 100 / props.columns.length
+              let personPrice = Math.floor(newProduct.fullPrice / 100 * personPercent)
+              props.columns.forEach((person) => {newProduct.prices[person.id] = 
+                { price: personPrice, displayedPercent: Math.floor(personPercent), realPercent: personPercent, fixed: false, purchaser: false }})
             }
             else {
-              props.columns.forEach((person) => {newProduct.prices[person.id] = { price: 0, displayedPercent: 0, realPercent: 0, fixed: false }})
-              newProduct.prices[selectedPerson] = { price: values.fullPrice, displayedPercent: 100, realPercent: 100, fixed: false }
+              props.columns.forEach((person) => {newProduct.prices[person.id] = { price: 0, displayedPercent: 0, realPercent: 0, fixed: false, purchaser: false }})
+              newProduct.prices[selectedPerson] = { price: parseFloat(values.fullPrice), displayedPercent: 100, realPercent: 100, fixed: false, purchaser: false }
             }
             props.setRow([...props.rows, newProduct])
+            console.log(props.rows)
 
             values.name = ''
             values.fullPrice = ''

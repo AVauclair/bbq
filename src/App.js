@@ -52,7 +52,7 @@ function App() {
   let RecalculatePrices = (columns, product) => {
     let personPercent = 100 / columns.length
     let personPrice = Math.floor(product.fullPrice / 100 * personPercent)
-    columns.forEach((person) => {product.prices[person.id] = { price: personPrice, displayedPercent: Math.floor(personPercent), realPercent: personPercent, fixed: false }})
+    columns.forEach((person) => {product.prices[person.id] = { ...product.prices[person.id], price: personPrice, displayedPercent: Math.floor(personPercent), realPercent: personPercent, fixed: false }})
   }
 
   let sumFullPrice = 0;
