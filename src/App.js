@@ -45,9 +45,7 @@ function App() {
   let [rowCellIndex, setRowCellIndex] = useState()
   let [columnCellIndex, setColumnCellIndex] = useState()
   let [cellType, setCellType] = useState()
-  let [selectedPerson, setSelectedPerson] = useState(0)
-
-  let selectedPerson2 = 0
+  let [selectedPerson, setSelectedPerson] = useState(-1)
 
   let RecalculatePrices = (columns, product) => {
     let personPercent = 100 / columns.length
@@ -58,12 +56,23 @@ function App() {
   let sumFullPrice = 0;
   let sumPersonsPrice = []
   let SummaryCalc = () => {
-      rows.forEach((row) => {sumFullPrice += row.fullPrice})
-      columns.forEach((column) => {
-          {sumPersonsPrice[column.id] = rows.reduce((sum, row) => {
+    rows.forEach((row) => {sumFullPrice += row.fullPrice})
+    columns.forEach((column) => {
+      if (selectedPerson !== -1) {
+        sumPersonsPrice[column.id] = rows.reduce((sum, row) => {
+          if (row.prices[selectedPerson].purchaser) {
+            console.log(sum)
             return (sum + row.prices[column.id].price)
-          }, 0)}
-          })
+          }
+          else {return sum}
+        }, 0)
+      }
+      else {
+        sumPersonsPrice[column.id] = rows.reduce((sum, row) => {
+          return (sum + row.prices[column.id].price)
+        }, 0)
+      }}
+    )
   }
 
   let DeleteCell = () => {
@@ -87,15 +96,11 @@ function App() {
                 <select onChange={e => {
                   if (e.target.selectedIndex !== 0)
                   {
-                    selectedPerson2 = e.target.selectedIndex - 1
-                    console.log("index:" + e.target.selectedIndex)
-                    console.log("selectedPerson:" + selectedPerson2)
+                    setSelectedPerson(parseFloat(e.target.selectedIndex - 1))
                   }
                   else {
-                    selectedPerson2 = -1
-                    console.log("index:" + e.target.selectedIndex)
-                    console.log("selectedPerson:" + selectedPerson2)
-                    rows.forEach((product) => {RecalculatePrices(columns, product)})
+                    setSelectedPerson(-1)
+                    // rows.forEach((product) => {RecalculatePrices(columns, product)})
                   }
                   }}>
                 <option key={0} value="Все">Все</option>
@@ -118,12 +123,18 @@ function App() {
           </thead>
           <tbody>
             {rows.map((row, rowCellIndex) => (
-              <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson2}
-              setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
-              RecalculatePrices={RecalculatePrices} setSelectedPerson={setSelectedPerson}/>
+                selectedPerson !== -1 
+                ? row.prices[selectedPerson].purchaser
+                  ? <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
+                      setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
+                      RecalculatePrices={RecalculatePrices} setSelectedPerson={setSelectedPerson}/>
+                  : null
+                : <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
+                  setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
+                  RecalculatePrices={RecalculatePrices} setSelectedPerson={setSelectedPerson}/>
             ))}
             <th>Итого</th>
-            <Summary rows={rows} columns={columns} SummaryCalc={SummaryCalc} sumFullPrice={sumFullPrice} sumPersonsPrice={sumPersonsPrice}/>
+            <Summary rows={rows} columns={columns} SummaryCalc={SummaryCalc} sumFullPrice={sumFullPrice} sumPersonsPrice={sumPersonsPrice} selectedPerson={selectedPerson}/>
           </tbody>
         </table>
       </div>
