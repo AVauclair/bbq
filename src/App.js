@@ -56,12 +56,12 @@ function App() {
   let sumFullPrice = 0;
   let sumPersonsPrice = []
   let SummaryCalc = () => {
-    rows.forEach((row) => {sumFullPrice += row.fullPrice})
+    // rows.forEach((row) => {sumFullPrice += row.fullPrice})
+    // rows.reduce((sum, row) => {return sum + row.fullPrice}, 0)
     columns.forEach((column) => {
       if (selectedPerson !== -1) {
         sumPersonsPrice[column.id] = rows.reduce((sum, row) => {
           if (row.prices[selectedPerson].purchaser) {
-            console.log(sum)
             return (sum + row.prices[column.id].price)
           }
           else {return sum}
@@ -125,10 +125,9 @@ function App() {
             {rows.map((row, rowCellIndex) => (
                 selectedPerson !== -1 
                 ? row.prices[selectedPerson].purchaser
-                  ? <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
+                  && <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
                       setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
                       RecalculatePrices={RecalculatePrices} setSelectedPerson={setSelectedPerson}/>
-                  : null
                 : <Rows row={row} rows={rows} columns={columns} index={rowCellIndex} productColor={row.color} selectedPerson={selectedPerson}
                   setArray={setRow} setButtonDisable={setButtonDisable} setRowCellIndex={setRowCellIndex} setCellType={setCellType}
                   RecalculatePrices={RecalculatePrices} setSelectedPerson={setSelectedPerson}/>

@@ -79,10 +79,10 @@ export default function Cell(props) {
       
 
       {props.cellType === "column"
-          ? <>
+          && <>
               <img src={colorPickerPNG} onClick={() => setDisplayColorPicker(displayColorPicker = !displayColorPicker)} onBlur={() => setDisplayColorPicker(false)}/> 
               {displayColorPicker === true
-                ? <ChromePicker color={color} onChange={changedColor => {
+                && <ChromePicker color={color} onChange={changedColor => {
                   setColor(changedColor.hex)
                   newArray[props.index] = {...newArray[props.index], 'color': changedColor.hex}
                   props.rows.forEach((product) => {
@@ -91,13 +91,11 @@ export default function Cell(props) {
                     }
                   })
                   props.setArray(newArray)
-                }}/> 
-                : null}
-            </>
-          : null}
+                }}/>}
+            </>}
 
       {props.rowCellName === "name"
-      ? <>
+      && <>
         <select className='purchaserSelect' defaultValue={"Выберите человека"} onChange={e => {
           newArray[props.index] = {...newArray[props.index], 'color': personColors[e.target.selectedIndex]}
           props.columns.forEach((person) => {newArray[props.index].prices[person.id] = {...newArray[props.index].prices[person.id], purchaser: false}})
@@ -114,8 +112,7 @@ export default function Cell(props) {
           )})
         }
       </select>
-        </>
-      : null}
+        </>}
     </td>
   )
 }
